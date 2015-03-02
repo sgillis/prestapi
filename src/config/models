@@ -1,0 +1,48 @@
+User
+    ident Text
+    password Text Maybe
+    UniqueUser ident
+    deriving Typeable
+
+Email
+    email Text
+    user UserId Maybe
+    verkey Text Maybe
+    UniqueEmail email
+
+Subject
+    number Text
+    UniqueSubject number
+
+Questions
+    subject SubjectId
+    created UTCTime
+    age Int
+    sex Text
+    question1 Text
+    question2 Text
+    question3 Text
+    question4 Text
+    question5 Text
+    question6 Text
+    question7 Text
+    question8 Text
+    question9 Text
+    question10 Text
+    question11 Text
+    remark1 Text Maybe
+    remark2 Text Maybe
+    remark3 Text Maybe
+    remark4 Text Maybe
+    remark5 Text Maybe
+    remark6 Text Maybe
+    remark7 Text Maybe
+    remark8 Text Maybe
+    remark9 Text Maybe
+    remark10 Text Maybe
+
+Rating
+    subject SubjectId
+    sample Text
+    rate Int
+    position Int

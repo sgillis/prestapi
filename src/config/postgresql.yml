@@ -1,0 +1,33 @@
+# NOTE: These settings can be overridden by environment variables as well, in
+# particular:
+#
+#    PGHOST
+#    PGPORT
+#    PGUSER
+#    PGPASS
+#    PGDATABASE
+
+Default: &defaults
+  user: prestapi
+  password: prestapi
+  host: localhost
+  port: 5432
+  database: prestapi
+  poolsize: 10
+
+Development:
+  <<: *defaults
+
+Testing:
+  database: prestapi_test
+  <<: *defaults
+
+Staging:
+  database: prestapi_staging
+  poolsize: 100
+  <<: *defaults
+
+Production:
+  database: prestapi_production
+  poolsize: 100
+  <<: *defaults

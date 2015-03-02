@@ -1,0 +1,20 @@
+postgres:
+    image: postgres:9.4
+    ports:
+        - "172.17.42.1:5432:5432"
+    volumes:
+        - data:/var/lib/postgresql/data
+
+prestapi:
+    build: .
+    command: yesod devel
+    links:
+        - postgres
+    volumes:
+        - src:/src
+    environment:
+        PGHOST: "172.17.42.1"
+        PGUSER: "postgres"
+        PGPASS: ""
+    ports:
+        - "3000:3000"
