@@ -7,7 +7,7 @@ postgres:
 
 prestapi:
     build: .
-    command: yesod devel
+    command: /src/dist/build/prestapi/prestapi production --port 3000
     links:
         - postgres
     volumes:
