@@ -1,3 +1,5 @@
+{-# LANGUAGE FlexibleInstances #-}
+
 module Model where
 
 import Yesod
@@ -58,6 +60,44 @@ data RatingInput = RatingInput
 instance FromJSON Subject where
     parseJSON (Object o) = Subject <$> o .: "number"
     parseJSON _ = mzero
+
+instance ToJSON (Entity Subject) where
+    toJSON (Entity _ s) = object
+        [ "number" .= subjectNumber s ]
+
+instance ToJSON (Entity Questions) where
+    toJSON (Entity _ q) = object
+        [ "age" .= questionsAge q
+        , "sex" .= questionsSex q
+        , "question1" .= questionsQuestion1 q
+        , "question2" .= questionsQuestion2 q
+        , "question3" .= questionsQuestion3 q
+        , "question4" .= questionsQuestion4 q
+        , "question5" .= questionsQuestion5 q
+        , "question6" .= questionsQuestion6 q
+        , "question7" .= questionsQuestion7 q
+        , "question8" .= questionsQuestion8 q
+        , "question9" .= questionsQuestion9 q
+        , "question10" .= questionsQuestion10 q
+        , "question11" .= questionsQuestion11 q
+        , "remark1" .= questionsRemark1 q
+        , "remark2" .= questionsRemark2 q
+        , "remark3" .= questionsRemark3 q
+        , "remark4" .= questionsRemark4 q
+        , "remark5" .= questionsRemark5 q
+        , "remark6" .= questionsRemark6 q
+        , "remark7" .= questionsRemark7 q
+        , "remark8" .= questionsRemark8 q
+        , "remark9" .= questionsRemark9 q
+        , "remark10" .= questionsRemark10 q
+        ]
+
+instance ToJSON (Entity Rating) where
+    toJSON (Entity _ r) = object
+        [ "sample" .= ratingSample r
+        , "rate" .= ratingRate r
+        , "position" .= ratingPosition r
+        ]
 
 instance FromJSON QuestionsInput where
     parseJSON (Object o) = QuestionsInput
