@@ -28,6 +28,6 @@ Staging:
   <<: *defaults
 
 Production:
-  database: prestapi_production
+  database: prestapi
   poolsize: 100
   <<: *defaults

@@ -6,5 +6,7 @@
 
 / HomeR GET
 
+/authenticate AuthenticateR POST
+
 /experiment/#Text ExperimentR GET
 /experiment SubmitExperimentR POST

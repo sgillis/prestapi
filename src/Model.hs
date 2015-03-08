@@ -11,6 +11,7 @@ import Data.Time
 import Control.Applicative
 import Control.Monad
 import Data.Aeson
+import Data.ByteString
 
 -- You can define all of your database entities in the entities file.
 -- You can find more information on persistent and how to declare entities
@@ -23,6 +24,12 @@ data Experiment = Experiment
     { subject :: Subject
     , questions :: QuestionsInput
     , ratings :: [RatingInput]
+    , authentication :: AuthenticationInput
+    }
+
+data AuthenticationInput = AuthenticationInput
+    { username :: Text
+    , password :: Text
     }
 
 data QuestionsInput = QuestionsInput
@@ -56,6 +63,12 @@ data RatingInput = RatingInput
     , rating :: Int
     , position :: Int
     }
+
+instance FromJSON AuthenticationInput where
+    parseJSON (Object o) = AuthenticationInput
+        <$> o .: "username"
+        <*> o .: "password"
+    parseJSON _ = mzero
 
 instance FromJSON Subject where
     parseJSON (Object o) = Subject <$> o .: "number"
@@ -138,4 +151,5 @@ instance FromJSON Experiment where
         <$> o .: "subject"
         <*> o .: "questions"
         <*> o .: "ratings"
+        <*> o .: "authentication"
     parseJSON _ = mzero

@@ -2,6 +2,8 @@ module Handler.Experiment where
 
 import Import
 import Data.Time
+import Crypto.PasswordStore
+import Data.Text.Encoding
 
 getExperimentR :: Text -> Handler Value
 getExperimentR subjNumber = do
@@ -23,14 +25,27 @@ getExperimentR subjNumber = do
 
 postSubmitExperimentR :: Handler Value
 postSubmitExperimentR = do
+    addHeader "Access-Control-Allow-Origin" "*"
     experiment <- requireJsonBody :: Handler Experiment
-    time <- liftIO $ getZonedTime >>= \time -> return $ zonedTimeToUTC time
-    _ <- runDB $ do
-        subjId <- insert $ subject experiment
-        _ <- insert $ constructQuestion subjId time (questions experiment)
-        let rs = map (constructRating subjId) (ratings experiment)
-        mapM insert rs
-    return $ object ["msg" .= ("success" :: Text)]
+    let authinput = authentication experiment
+        user = username authinput
+        pass = password authinput
+    mauth <- runDB $ getBy $ UniqueAuthentication user
+    case mauth of
+         Nothing -> return $ object [ "success" .= False ]
+         Just (Entity _ auth) -> do
+           let valid = verifyPassword (encodeUtf8 pass)
+                                      (authenticationPassword auth)
+           case valid of
+                True -> do
+                   time <- liftIO $ getZonedTime >>= \time -> return $ zonedTimeToUTC time
+                   _ <- runDB $ do
+                       subjId <- insert $ subject experiment
+                       _ <- insert $ constructQuestion subjId time (questions experiment)
+                       let rs = map (constructRating subjId) (ratings experiment)
+                       mapM insert rs
+                   return $ object [ "success" .= True ]
+                False -> return $ object [ "success" .= False ]
 
 constructQuestion :: SubjectId -> UTCTime -> QuestionsInput -> Questions
 constructQuestion sid time input = Questions

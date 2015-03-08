@@ -10,6 +10,11 @@ Email
     verkey Text Maybe
     UniqueEmail email
 
+Authentication
+    username Text
+    password ByteString
+    UniqueAuthentication username
+
 Subject
     number Text
     UniqueSubject number

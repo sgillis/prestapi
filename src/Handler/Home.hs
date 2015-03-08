@@ -4,4 +4,6 @@ module Handler.Home where
 import Import
 
 getHomeR :: Handler Value
-getHomeR = return $ object ["msg" .= ("Prestapi" :: Text)]
+getHomeR = do
+    addHeader "Access-Control-Allow-Origin" "*"
+    return $ object ["msg" .= ("Prestapi" :: Text)]
