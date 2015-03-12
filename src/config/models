@@ -52,3 +52,4 @@ Rating
     sample Text
     rate Int
     position Int
+    repeats Int
