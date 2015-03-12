@@ -6,5 +6,5 @@ docker run \
     -e PGUSER=postgres \
     -e PGPASS= \
     -p 3000:3000 \
-    prestapi_prestapi \
+    sgillis/prestapi \
     /bin/bash
