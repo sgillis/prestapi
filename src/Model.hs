@@ -62,6 +62,7 @@ data RatingInput = RatingInput
     { sample :: Text
     , rating :: Int
     , position :: Int
+    , repeats :: Int
     }
 
 instance FromJSON AuthenticationInput where
@@ -110,6 +111,7 @@ instance ToJSON (Entity Rating) where
         [ "sample" .= ratingSample r
         , "rate" .= ratingRate r
         , "position" .= ratingPosition r
+        , "repeats" .= ratingRepeats r
         ]
 
 instance FromJSON QuestionsInput where
@@ -144,6 +146,7 @@ instance FromJSON RatingInput where
         <$> o .: "sample"
         <*> o .: "rating"
         <*> o .: "position"
+        <*> o .: "repeats"
     parseJSON _ = mzero
 
 instance FromJSON Experiment where
