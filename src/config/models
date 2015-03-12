@@ -17,6 +17,7 @@ Authentication
 
 Subject
     number Text
+    experimenter Text
     UniqueSubject number
 
 Questions
