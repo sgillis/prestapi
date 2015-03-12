@@ -18,6 +18,8 @@ Authentication
 Subject
     number Text
     experimenter Text
+    startDate UTCTime
+    endDate UTCTime
     UniqueSubject number
 
 Questions
