@@ -56,3 +56,4 @@ Rating
     rate Int
     position Int
     repeats Int
+    practice Bool
