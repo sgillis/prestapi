@@ -76,4 +76,4 @@ constructQuestion sid time input = Questions
 
 constructRating :: SubjectId -> RatingInput -> Rating
 constructRating sid input = Rating
-    sid (sample input) (rating input) (position input) (repeats input)
+    sid (sample input) (rating input) (position input) (repeats input) (practice input)
