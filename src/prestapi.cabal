@@ -22,6 +22,9 @@ library
                      Handler.Home
                      Handler.Experiment
                      Handler.Authenticate
+                     Handler.Questionnaire
+                     Handler.Trialphase
+                     Handler.Masterfile
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT

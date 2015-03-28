@@ -29,6 +29,9 @@ import Yesod.Core.Types (loggerSet, Logger (Logger))
 import Handler.Home
 import Handler.Experiment
 import Handler.Authenticate
+import Handler.Questionnaire
+import Handler.Trialphase
+import Handler.Masterfile
 
 -- This line actually creates our YesodDispatch instance. It is the second half
 -- of the call to mkYesodData which occurs in Foundation.hs. Please see the

@@ -8,3 +8,7 @@
 
 /experiment/#Text ExperimentR GET
 /experiment SubmitExperimentR POST
+
+/questionnaire QuestionnaireR GET
+/trialphase TrialphaseR GET
+/masterfile MasterfileR GET
