@@ -12,3 +12,5 @@
 /questionnaire QuestionnaireR GET
 /trialphase TrialphaseR GET
 /masterfile MasterfileR GET
+
+/authenticate AuthenticateR POST

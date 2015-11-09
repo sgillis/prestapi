@@ -75,6 +75,7 @@ instance FromJSON AuthenticationInput where
 instance FromJSON Subject where
     parseJSON (Object o) = Subject <$> o .: "number"
                                    <*> o .: "experimenter"
+                                   <*> o .: "list_number"
                                    <*> o .: "start_date"
                                    <*> o .: "end_date"
     parseJSON _ = mzero
@@ -83,6 +84,7 @@ instance ToJSON (Entity Subject) where
     toJSON (Entity _ s) = object
         [ "number" .= subjectNumber s
         , "experimenter" .= subjectExperimenter s
+        , "listNumber" .= subjectListNumber s
         , "start_date".= subjectStartDate s
         , "end_date" .= subjectEndDate s
         ]
