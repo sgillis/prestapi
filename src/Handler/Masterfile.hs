@@ -4,6 +4,7 @@ import Import
 import Prelude (head)
 import qualified Data.Text as T
 import Data.Text.IO (readFile)
+import Data.List (find)
 
 getMasterfileR :: Handler RepPlain
 getMasterfileR = do
@@ -25,6 +26,7 @@ header = ";" `T.append` T.intercalate ";"
     , "position"
     , "start"
     , "end"
+    , "list"
     ]
 
 extractRate :: Entity Rating -> Rating
@@ -47,7 +49,8 @@ rateToLine f (Just (s, r)) = fline `T.append` ";" `T.append` T.intercalate ";"
     , rate
     , position
     , start
-    , end ]
+    , end
+    , list ]
       where
           fline = getCsvLine f $ ratingSample r
           experimenter = subjectExperimenter s
@@ -58,10 +61,14 @@ rateToLine f (Just (s, r)) = fline `T.append` ";" `T.append` T.intercalate ";"
           position = T.pack $ show $ ratingPosition r
           start = T.pack $ show $ subjectStartDate s
           end = T.pack $ show $ subjectEndDate s
+          list = subjectListNumber s
 
 getCsvLine :: [Text] -> Text -> Text
 getCsvLine f sample =
-    head $ filter (correctLine sample) f
-      where number line = head $ T.split (==';') line
-            correctLine sample line =
-                number line `T.isPrefixOf` sample
+    let number line = head $ T.split (==',') line
+        correctLine sample line =
+          number line `T.isPrefixOf` sample
+        l = find (correctLine sample) f
+    in case l of
+            Just l' -> l'
+            Nothing -> sample
