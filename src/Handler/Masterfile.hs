@@ -5,11 +5,13 @@ import Prelude (head)
 import qualified Data.Text as T
 import Data.Text.IO (readFile)
 import Data.List (find)
+import Data.String.Utils (rstrip)
 
 getMasterfileR :: Handler RepPlain
 getMasterfileR = do
     file <- liftIO $ readFile "/masterfile.csv"
-    let csv = T.lines file
+    let csv' = T.lines file
+    let csv = map (T.pack . rstrip . T.unpack) csv'
     ers <- runDB $ selectList [ RatingPractice ==. False ] [ ]
     let rs = map extractRate ers
     subrs <- mapM coupleSubject rs
@@ -17,7 +19,7 @@ getMasterfileR = do
         ((head csv) `T.append` header) : map (rateToLine csv) subrs
 
 header :: Text
-header = ";" `T.append` T.intercalate ";"
+header = "," `T.append` T.intercalate ","
     [ "experimenter"
     , "rater"
     , "stimulus"
@@ -41,7 +43,7 @@ coupleSubject r = do
 
 rateToLine :: [Text] -> Maybe (Subject, Rating) -> Text
 rateToLine _ Nothing       = ""
-rateToLine f (Just (s, r)) = fline `T.append` ";" `T.append` T.intercalate ";"
+rateToLine f (Just (s, r)) = fline `T.append` "," `T.append` T.intercalate ","
     [ experimenter
     , rater
     , stimulus

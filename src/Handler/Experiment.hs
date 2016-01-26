@@ -63,6 +63,7 @@ constructQuestion sid time input = Questions
     (question9 input)
     (question10 input)
     (question11 input)
+    (question12 input)
     (remark1 input)
     (remark2 input)
     (remark3 input)

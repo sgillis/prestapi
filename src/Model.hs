@@ -46,6 +46,7 @@ data QuestionsInput = QuestionsInput
     , question9 :: Text
     , question10 :: Text
     , question11 :: Text
+    , question12 :: Text
     , remark1 :: Maybe Text
     , remark2 :: Maybe Text
     , remark3 :: Maybe Text
@@ -140,6 +141,7 @@ instance FromJSON QuestionsInput where
         <*> o .: "question9"
         <*> o .: "question10"
         <*> o .: "question11"
+        <*> o .: "question12"
         <*> o .:? "remark1"
         <*> o .:? "remark2"
         <*> o .:? "remark3"
