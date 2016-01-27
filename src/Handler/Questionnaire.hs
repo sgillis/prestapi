@@ -49,6 +49,7 @@ questionToLines (Just sq) =
         , ("question9", questionsQuestion9, maybeText . questionsRemark9)
         , ("question10", questionsQuestion10, maybeText . questionsRemark10)
         , ("question11", questionsQuestion11, noRemark)
+        , ("question12", questionsQuestion12, noRemark)
         ]
     where
         noRemark = \_ -> ("" :: Text)
