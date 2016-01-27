@@ -43,7 +43,8 @@ coupleSubject r = do
 
 rateToLine :: [Text] -> Maybe (Subject, Rating) -> Text
 rateToLine _ Nothing       = ""
-rateToLine f (Just (s, r)) = fline `T.append` "," `T.append` T.intercalate ","
+rateToLine (_:f) (Just (s, r)) =
+  fline `T.append` "," `T.append` T.intercalate ","
     [ experimenter
     , rater
     , stimulus
@@ -68,9 +69,11 @@ rateToLine f (Just (s, r)) = fline `T.append` "," `T.append` T.intercalate ","
 getCsvLine :: [Text] -> Text -> Text
 getCsvLine f sample =
     let number line = head $ T.split (==',') line
+        
         correctLine sample line =
-          number line `T.isPrefixOf` sample
-        l = find (correctLine sample) f
+          number line == (head $ T.split (=='_') sample)
+        l = filter (correctLine sample) f
     in case l of
-            Just l' -> l'
-            Nothing -> sample
+            [l'] -> l'
+            [] -> sample
+            _ -> "multiple matches"
