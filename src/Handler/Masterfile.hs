@@ -69,7 +69,6 @@ rateToLine (_:f) (Just (s, r)) =
 getCsvLine :: [Text] -> Text -> Text
 getCsvLine f sample =
     let number line = head $ T.split (==',') line
-        
         correctLine sample line =
           number line == (head $ T.split (=='_') sample)
         l = filter (correctLine sample) f
